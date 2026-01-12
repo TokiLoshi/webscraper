@@ -1,3 +1,5 @@
+import { getHTML } from "./crawl";
+
 function main() {
 	console.log("Hello, World! Let's crawl some websites.");
 	const testURL = "https://wagslane.dev";
@@ -15,6 +17,7 @@ function main() {
 	if (args.length === 1) {
 		const baseURL = args[0];
 		console.log("starting to crawl: ", baseURL);
+		getHTML(baseURL);
 	}
 }
 
