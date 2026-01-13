@@ -30,7 +30,8 @@ export async function getHTML(url: string) {
 		}
 
 		const data = await response.text();
-		console.log(data);
+		console.log("Data from getHTML ", data);
+		return data;
 	} catch (error) {
 		console.error("Error getting data: ", error);
 	}

@@ -1,4 +1,5 @@
 import { getHTML } from "./crawl";
+import crawlPage from "./crawl";
 
 function main() {
 	console.log("Hello, World! Let's crawl some websites.");
@@ -18,6 +19,7 @@ function main() {
 		const baseURL = args[0];
 		console.log("starting to crawl: ", baseURL);
 		getHTML(baseURL);
+		crawlPage(baseURL);
 	}
 }
 
