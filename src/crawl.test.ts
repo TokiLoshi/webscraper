@@ -23,6 +23,13 @@ test("normalizeURL capitals", () => {
 	expect(actual).toEqual(expected);
 });
 
+test("normalizedURL capitals after domain", () => {
+	const input = "https://blog.boot.dev/path";
+	const actual = normalizeURL(input);
+	const expected = "blog.boot.dev/path";
+	expect(actual).toEqual(expected);
+});
+
 test("normalizedURL http", () => {
 	const input = "http://BLOG.boot.dev/path";
 	const actual = normalizeURL(input);

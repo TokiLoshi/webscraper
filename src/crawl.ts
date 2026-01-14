@@ -4,7 +4,7 @@ export default function normalizeURL(url: string) {
 	if (fullPath.slice(-1) === "/") {
 		fullPath = fullPath.slice(0, -1);
 	}
-	return fullPath;
+	return fullPath.toLowerCase();
 }
 
 export async function getHTML(url: string) {
