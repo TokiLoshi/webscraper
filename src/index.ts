@@ -1,7 +1,7 @@
 import { getHTML } from "./crawl";
-import crawlPage from "./crawl";
+import { crawlSiteAsync } from "./crawlPage";
 
-function main() {
+async function main() {
 	console.log("Hello, World! Let's crawl some websites.");
 	const testURL = "https://wagslane.dev";
 	console.log("Base URL: ", testURL);
@@ -19,7 +19,8 @@ function main() {
 		const baseURL = args[0];
 		console.log("starting to crawl: ", baseURL);
 		getHTML(baseURL);
-		crawlPage(baseURL);
+		const pages = await crawlSiteAsync(baseURL, 1);
+		console.log("Crawl results: ");
 	}
 }
 
