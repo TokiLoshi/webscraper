@@ -93,3 +93,36 @@ test("extractPageData basic", () => {
 	};
 	expect(actual).toEqual(expected);
 });
+
+test("xstractPageData main section priority", () => {
+	const inputURL = "https://blog.boot.dev";
+	const inputBody = `
+    <html><body>
+      <nav><p>Navigation paragraph</p></nav>
+
+        <h1>Main Title</h1>
+        <p>Main paragraph content.</p>
+
+    </body></html>
+  `;
+
+	const actual = extractPageData(inputBody, inputURL);
+	const expectedH1 = "Main Title";
+	const epxectedFirstParagraph = "Main paragraph content.";
+	expect(actual.h1).toEqual(expectedH1);
+});
+
+test("extract_page_data missing elements", () => {
+	const inputURL = "https://blog.boot.dev";
+	const inputBody = `<html><body><div>No h1, p, links, or images</div></body></html>`;
+
+	const actual = extractPageData(inputBody, inputURL);
+	const expected = {
+		url: "https://blog.boot.dev",
+		h1: "",
+		first_paragraph: "",
+		outgoing_links: [],
+		image_urls: [],
+	};
+	expect(actual).toEqual(expected);
+});
