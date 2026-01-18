@@ -44,9 +44,18 @@ export function getImagesFromHTML(html: string, baseURL: string): string[] {
 	return allImages;
 }
 
-export function extractPageData(html: string, pageURL: string) {
-	console.log("Extracting page data");
-	const htmlBody = new JSDOM(html);
+export type ExtractedPageData = {
+	url: string;
+	h1: string;
+	first_paragraph: string;
+	outgoing_links: string[];
+	image_urls: string[];
+};
+
+export function extractPageData(
+	html: string,
+	pageURL: string,
+): ExtractedPageData {
 	return {
 		url: pageURL,
 		h1: getH1FromHTML(html),

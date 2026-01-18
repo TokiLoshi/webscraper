@@ -1,5 +1,7 @@
-import { getHTML } from "./crawl";
+import { getHTML } from "./crawlPage";
 import { crawlSiteAsync } from "./crawlPage";
+import { ExtractedPageData, extractPageData } from "./extractHtml";
+import writeCSVReport from "./report";
 
 async function main() {
 	console.log("Hello, World! Let's crawl some websites.");
@@ -35,11 +37,15 @@ async function main() {
 	console.log("MaxConcurrency: ", maxConcurrency);
 	console.log("Max Pages: ", maxPages);
 
-	getHTML(baseURL);
-
-	const pages = await crawlSiteAsync(baseURL, maxConcurrency, maxPages);
-	console.log(`Crawl completed! Craweled: ${Object.keys(pages).length}`);
-	console.log("Results: ", pages);
+	const { pages, pageData } = await crawlSiteAsync(
+		baseURL,
+		maxConcurrency,
+		maxPages,
+	);
+	console.log(`Crawl completed! Crawled: ${Object.keys(pages).length}`);
+	console.log("Writing csv....");
+	writeCSVReport(pageData);
+	console.log("Done ");
 }
 
 main();
