@@ -6,14 +6,25 @@ export class ConcurrentCrawler {
 	private baseURL: string;
 	private pages: Record<string, number>;
 	private limit: <T>(fn: () => Promise<T>) => Promise<T>;
+	private maxPages: number;
+	private shouldStop: boolean;
+	private allTasks: Set<Promise<void>>;
 
-	constructor(baseURL: string, maxConcurrency: number) {
+	constructor(baseURL: string, maxConcurrency: number, maxPages: number) {
 		(this.baseURL = baseURL),
 			(this.pages = {}),
 			(this.limit = pLimit(maxConcurrency));
+		this.maxPages = maxPages;
+		this.shouldStop = false;
+		this.allTasks = new Set();
 	}
 
 	private addPageVisit(normalizedURL: string): boolean {
+		if (Object.keys(this.pages).length >= this.maxPages) {
+			this.shouldStop = true;
+			return false;
+		}
+
 		if (this.pages[normalizedURL]) {
 			this.pages[normalizedURL]++;
 			return false;
@@ -65,6 +76,7 @@ export class ConcurrentCrawler {
 
 		console.log(`Crawing: ${currentURL}`);
 		let html = "";
+		this.allTasks.set();
 
 		try {
 			html = await this.getHTML(currentURL);
